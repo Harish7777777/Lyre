@@ -1,0 +1,60 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Brand</title>
+</head>
+
+<body>
+    <form id="search-form" action="{% url 'dataReq' %}" method="GET">
+        <input type="text" name="q" id="search-input">
+        <button type="submit">Search</button>
+    </form>
+      
+    <div id="search-results"></div>
+
+    <script>
+        document.getElementById("search-form").addEventListener("submit", searchSongs);
+
+        function searchSongs(event) {
+            event.preventDefault(); // prevent the form from submitting normally
+
+            var query = document.getElementById("search-input").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/dataReq/?q=" + encodeURIComponent(query || ""), true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var results = JSON.parse(xhr.responseText);
+                    console.log(results);
+                    updateSearchResults(results);
+                }
+            };
+            xhr.send();
+        }
+
+        function updateSearchResults(results) {
+            var resultsDiv = document.getElementById("search-results");
+            resultsDiv.innerHTML = ""; // clear any previous results
+      
+            for (var i = 0; i < results.length; i++) {
+                var song = results[i];
+                var songDiv = document.createElement("div");
+                songDiv.innerHTML = "<h2>" + song.name + "</h2><p>" + song.lyrics + "</p>";
+              
+                var audio = document.createElement("audio");
+                audio.src = song.song; // Replace 'song.audioUrl' with the actual URL of your audio file
+                audio.controls = true;
+              
+                songDiv.appendChild(audio);
+                resultsDiv.appendChild(songDiv);
+              }
+              
+        }
+    </script>
+</body>
+
+</html>
