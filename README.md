@@ -1,6 +1,6 @@
 # Lyre
 
-Create an immersive music experience with a lyric-driven music player built . This project combines the power of a music player with real-time lyrics display, enhancing your music listening with synchronized lyrics for a more engaging and enjoyable playback.
+Create an immersive music experience with a lyric-driven music player using django built . This project combines the power of a music player with real-time lyrics display, enhancing your music listening with synchronized lyrics for a more engaging and enjoyable playback.
 
 ## Features
 
